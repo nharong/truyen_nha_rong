@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang đọc tiểu thuyết dịch nhà rồng</title>
+    <style>
+        body {
+            font-family: arial, sans-serif;
+            background-color: rgb(174,143,185); 
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        /* Thanh thanh điều hướng (Menu) */
+        nav {
+           
+        
+            position: fixed;    /* Ghim cố định vị trí */
+            top: 20px;          /* Giữ khoảng cách với mép trên màn hình như cũ */
+            left: 50%;          /* Căn giữa màn hình */
+            transform: translateX(-50%); /* Căn giữa chuẩn xác kết hợp với left 50% */
+            width: calc(100% - 40px); /* Tự động co giãn bề ngang theo màn hình */
+            max-width: 900px;
+            background-color: #4a2c5a;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-sizing: border-box; /* Đảm bảo padding không làm tràn chiều rộng */
+            z-index: 1000;      /* Giúp menu luôn nổi lên trên cùng, không bị chữ truyện đè lên khi lướt */
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+        }
+
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        /* Khung chứa toàn bộ nội dung Sảnh */
+        .container {
+           max-width: 900px;
+            margin: 110px auto 0 auto; /* Đổi số đầu tiên thành 110px để đẩy khung nội dung dịch xuống dưới thanh menu */
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #4a2c5a;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .welcome-text {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+        }
+        /* Khu vực lưới chứa danh sách các bộ truyện */
+        .story-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+        }
+        /* Từng thẻ hộp truyện */
+        .story-card {
+            border: 1px solid #e1e1e1;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #fbfbfb;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        /* Hiệu ứng khi rê chuột vào hộp truyện */
+        .story-card:hover {
+            box-shadow: 0 6px 15px rgba(74, 44, 90, 0.2);
+            transform: translateY(-4px);
+            border-color: #4a2c5a;
+        }
+        .story-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4a2c5a;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 12px;
+        }
+        .story-title:hover {
+            color: #613975;
+        }
+        .story-desc {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+        .btn-read {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #4a2c5a;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .btn-read:hover {
+            background-color: #613975;
+        }
+                /* Thanh chứa các nút lọc thể loại */
+        .filter-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 8px 16px;
+            border: 2px solid #4a2c5a;
+            background-color: white;
+            color: #4a2c5a;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        /* Hiệu ứng khi rê chuột hoặc khi nút được chọn kích hoạt */
+        .filter-btn:hover, .filter-btn.active {
+            background-color: #4a2c5a;
+            color: white;
+        }
+
+    </style>
+        <script>
+                    function timKiemTruyen() {
+            // Lấy chữ bạn gõ vào ô tìm kiếm và chuyển thành chữ thường để so sánh
+            const tuKhoa = document.getElementById('search-input').value.toLowerCase().trim();
+            
+            // Duyệt qua từng hộp truyện ở sảnh
+            document.querySelectorAll('.story-card').forEach(card => {
+                // Lấy tên truyện bên trong thẻ <a> có class .story-title
+                const tenTruyen = card.querySelector('.story-title').textContent.toLowerCase();
+                
+                // Nếu tên truyện có chứa chữ bạn gõ thì hiện, ngược lại thì ẩn đi
+                if (tenTruyen.includes(tuKhoa)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function locTheLoai(theLoai, element) {
+            // Đổi màu nút đang được bấm chọn
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+
+            // Lọc danh sách truyện
+            document.querySelectorAll('.story-card').forEach(card => {
+                if (theLoai === 'tat-ca' || card.getAttribute('data-genre') === theLoai) {
+                    card.style.display = 'block'; // Hiện truyện khớp thể loại
+                } else {
+                    card.style.display = 'none';  // Ẩn truyện không khớp
+                }
+            });
+        }
+        
+        function locTruyen(giaTriLoc, element) {
+            // Đổi màu nút vừa được bấm chọn (bật class active, tắt các nút khác cùng nhóm)
+            element.parentElement.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+
+            // Tiến hành lọc danh sách truyện
+            document.querySelectorAll('.story-card').forEach(card => {
+                const theLoai = card.getAttribute('data-genre');
+                const chuoiTag = card.getAttribute('data-tags'); 
+
+                // Nếu chọn "Tất Cả", hoặc truyện trùng Thể loại, hoặc chuỗi Tag có chứa từ khóa Tag được chọn
+                if (giaTriLoc === 'tat-ca' || theLoai === giaTriLoc || chuoiTag.includes(giaTriLoc)) {
+                    card.style.display = 'block'; // Hiện truyện
+                } else {
+                    card.style.display = 'none';  // Ẩn truyện
+                }
+            });
+        }
+
+        // Giữ nguyên hàm tìm kiếm bằng ô gõ chữ của bạn
+        function timKiemTruyen() {
+            const tuKhoa = document.getElementById('search-input').value.toLowerCase().trim();
+            document.querySelectorAll('.story-card').forEach(card => {
+                const tenTruyen = card.querySelector('.story-title').textContent.toLowerCase();
+                const danhSachTag = card.getAttribute('data-tags').toLowerCase();
+                
+                if (tenTruyen.includes(tuKhoa) || danhSachTag.includes(tuKhoa)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+
+    </script>
+
+</head>
+<body>
+
+    <!-- Thanh Menu cố định đầu trang sảnh -->
+    <nav>
+        <a href="sanh.html">Trang Chủ </a>
+        <input type="text" id="search-input" placeholder=" Tìm tên truyện..." onkeyup="timKiemTruyen()" style="padding: 6px 12px; border-radius: 20px; border: none; outline: none; font-size: 14px; width: 200px;">
+        <a href="d:\c.việc\vietqr-19076552178014-1790530037009.png" target="_blank" style="color: #ffeb3b; margin-left: 20px;"> Donate Ủng Hộ</a>
+    </nav>
+    <div class="container">
+        <h1> Sảnh Truyện Novel</h1>
+        <p class="welcome-text">Chào mừng bạn đến với thế giới tiểu thuyết. Chọn một bộ truyện bên dưới để khám phá ngay:</p>
+
+        <!-- HÀNG THỂ LOẠI -->
+        <div class="filter-container" style="margin-bottom: 10px;">
+            <strong style="line-height: 35px; margin-right: 10px; color: #4a2c5a;">Thể loại:</strong>
+            <button class="filter-btn active" onclick="locTruyen('tat-ca', this)">Tất Cả</button>
+            <button class="filter-btn" onclick="locTruyen('phiêu-lưu', this)"> Phiêu Lưu</button>
+            <button class="filter-btn" onclick="locTruyen('đam-mỹ', this)">Đam Mỹ</button>
+            <button class="filter-btn" onclick="locTruyen('vô-hạn-lưu', this)">Vô Hạn Lưu</button>
+            <button class="filter-btn" onclick="locTruyen('trùng-sinh', this)">Trùng sinh</button>
+        </div>
+
+        <div class="story-grid">
+            
+            <!-- TRUYỆN 1: RỒNG TÍM -->
+            <div class="story-card" data-genre="phiêu-lưu" data-tags="#rongtim #phieuluu">
+                <a href="khu_truyen_rong_tim.html" class="story-title"> Rồng Tím</a>
+                <p class="story-desc">bu lì bu lì </p>
+                <p style="font-size: 12px; color: #888; margin-bottom: 15px;">#phieuluu </p>
+                <a href="khu_truyen_rong_tim.html" class="btn-read">Xem Mục Lục</a>
+            </div>
+
+            <!-- TRUYỆN 2: KIẾM THẦN TÂY ĐÔ -->
+            <div class="story-card" data-genre="vô-hạn-lưu"  data-tags="#kiemthantaydo #vohanluu #đam-mỹ">
+                <a href="khu_truyen_kiem_than.html" class="story-title"> Kiếm Thần Tây Đô</a>
+                <p class="story-desc">bờ la bờ la </p>
+                <p style="font-size: 12px; color: #888; margin-bottom: 15px;">#vohanluu #đam-mỹ</p>
+                <a href="khu_truyen_kiem_than.html" class="btn-read">Xem Mục Lục</a>
+            </div>
+
+            <!-- TRUYỆN 3: ĐAM MỸ MẪU -->
+            <div class="story-card" data-genre="đam-mỹ" data-tags="#đam-mỹ">
+                <a href="#" class="story-title"> Tình Thâm Biển Sâu</a>
+                <p class="story-desc">blu blu</p>
+                <p style="font-size: 12px; color: #888; margin-bottom: 15px;">#đam-mỹ</p>
+                <a href="#" class="btn-read">Xem Mục Lục</a>
+            </div>
+
+        </div>
+    </div>
+
+
+</body>
+</html>

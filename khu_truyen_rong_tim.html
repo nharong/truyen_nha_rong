@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>TÊN TRUYỆN</title>
+    <style>
+        body {
+            font-family: arial, sans-serif;
+            background-color: rgb(174,143,185);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+           
+        nav {
+    
+            position: fixed;    /* Ghim cố định vị trí */
+            top: 20px;          /* Giữ khoảng cách với mép trên màn hình như cũ */
+            left: 50%;          /* Căn giữa màn hình */
+            transform: translateX(-50%); /* Căn giữa chuẩn xác kết hợp với left 50% */
+            width: calc(100% - 40px); /* Tự động co giãn bề ngang theo màn hình */
+            max-width: 900px;
+            background-color: #4a2c5a;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-sizing: border-box; /* Đảm bảo padding không làm tràn chiều rộng */
+            z-index: 1000;      /* Giúp menu luôn nổi lên trên cùng, không bị chữ truyện đè lên khi lướt */
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+        }
+
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+        .container {
+           max-width: 900px;
+            margin: 110px auto 0 auto; /* Đổi số đầu tiên thành 110px để đẩy khung nội dung dịch xuống dưới thanh menu */
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 { color: #4a2c5a; }
+        .intro {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .chapter-list {
+            list-style: none;
+            padding: 0;
+        }
+        .chapter-list li {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        .chapter-list a {
+            color: #4a2c5a;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .chapter-list a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <!-- Khi bấm nút này sẽ tele ngược về sảnh chính -->
+    <nav>
+        <a href="sanh.html"> Trang chủ</a>
+    </nav>
+
+    <div class="container">
+        <h1> Truyện: Rồng Tím</h1>
+        
+        <div class="intro">
+            <strong>Văn án:</strong><br>
+            Câu chuyện kể về hành trình huyền thoại đi tìm tolet
+        </div>
+
+        <h2> Danh Sách Chương</h2>
+        <ul class="chapter-list">
+            <!-- Đường link dẫn sang trang đọc chương 1 -->
+            <li><a href="../name_1/chuong_1.html">Chương 1: Khởi đầu mới</a></li>
+            <li><a href="#">Chương 2: ỉa (Chưa làm)</a></li>
+        </ul>
+    </div>
+
+</body>
+</html>

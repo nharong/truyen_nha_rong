@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="utf-8">
+      <title> Trang đọc tiểu thuyết Rồng Tím </title>  
+    <style>
+    body {
+        font-family:arial,sans-serif;
+          background-color:rgb(174,143,185);
+          margin: 0; 
+          padding; 20xp;
+          color: #333;
+        }
+
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translate(-50%);
+            width: calc(100% - 40px);
+            max-width: 900px;
+            background-color: #4a2c5a;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-sizing: border-box;
+            z-index: 1000
+            display: flex;
+           justicfy-content: space-between;
+           align-items::center;
+
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+.container {
+            max-width: 900px;
+            margin: 110px auto 0 auto; /* Đổi số đầu tiên thành 110px để đẩy khung nội dung dịch xuống dưới thanh menu */
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+        h1{
+            text-align: center;
+            color: #4a2c5a;
+        }
+        .story-meta{
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-bottom: 20px;
+        }
+    .story-content{
+        font-size: 18px;
+        line-height: 1.8;
+        text-align: justify;
+    }
+     /* Khu vực nút chuyển chương */
+        .chapter-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* Giúp các nút và hộp chọn thẳng hàng với nhau */
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4a2c5a;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .btn:hover {
+            background-color: #613975;
+        }
+         /* Định dạng cho hộp chọn chương đẹp mắt hơn */
+        .chapter-select {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #4a2c5a;
+            border-radius: 5px;
+            background-color: white;
+            color: #4a2c5a;
+            font-weight: bold;
+            cursor: pointer;
+            outline: none;
+        }
+    </style>
+    </head>
+    <body>
+       <!-- Bổ sung 1: Thanh điều hướng trang web -->
+    <nav><a href="../trang_chu/sanh.html">Trang Chủ</a>
+        <a href="../trang_chu/khu_truyen_rong_tim.html" class="btn"> Trở Về Mục Lục</a>
+    </nav>
+        <div class="container">
+            <!--tên truyện-->
+            <h1>name</h1>
+            <!--Thông Tin Chương-->
+            <div class="story-meta"> Chương 1: name</div>
+            <!--Nội dung truyện-->
+            <div class="story-content">
+                <p> nơi viết nội dung </p>
+                
+            </div>
+             <!-- Nút điều hướng Chương trước / Chương sau -->
+        <div class="chapter-nav">
+            <a href="#" class="btn">⏮ Chương Trước</a>
+            <!-- Hộp lựa chọn danh sách chương -->
+             <select class="chapter-select" onchange="window.location.href=this.value;">
+    <option value="chuong_1.html" selected>Chương 1: Khởi đầu mới</option>
+    <option value="chuong_2.html">Chương 2: ỉa2</option>
+    <option value="chuong_3.html">Chương 3: ỉa3</option>
+    <option value="chuong_4.html">Chương 4: đi tắm</option>
+</select>
+
+            <a href="#" class="btn">Chương Sau ⏭</a>
+
+        </div>
+        </div>
+        
+    </body>
+</html>
